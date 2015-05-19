@@ -1,0 +1,16 @@
+<% @article.each do |article| %>
+    <h3><%= article.title %></h3>
+    <p>
+      <%= article.content.truncate(20) %>
+      <% if article.content.length >= 20 %>
+        <%= link_to '(read more)', article_path(article.id)%>
+      <%else%>
+        <%= link_to '(edit)', edit_article_path(article.id)%>
+        <span> | </span>
+      <span><%= link_to '(delete)', article_path(article.id), method: "DELETE",
+data: {confirm: 'Delete this data ? '} %><span>
+      <%end%> 
+    </p>
+    <hr/>
+<% end %>
+<%=link_to '(new)', new_article_path%>
