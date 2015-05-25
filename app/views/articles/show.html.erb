@@ -1,9 +1,21 @@
-  <h3><%= @article.title %></h3>
-  <p>
-    <%= @article.content %><br>
-    <%= link_to '(edit)', edit_article_path(@article.id)%>
-    <span> | </span>
-    <span><%= link_to '(delete)', article_path(@article.id), method: "DELETE",
-data: {confirm: 'Delete this data ? '} %><span>
-  </p>
-  <p><%= link_to 'back to index', articles_path %></p>
+<h3><%= @article.title %></h3>
+<p><%= @article.content %></p>
+<% if @comments %>
+  <h3>Comments</h3>
+ 
+  <% for comment in @comments do %>
+    <p><strong><%=h(comment.user_id) %></strong>: <%=h comment.content %>
+  <% end %>
+<% end %>
+
+<h3>Post Your Comment</h3>
+<% form_for(Comment.new) do |form| %>
+  <p><%= form.label :user_id %></p>
+  <p><%= form.text_field :user_id %></p>
+ 
+  <p><%= form.label :content, 'Comment' %></p>
+  <p><%= form.text_area :content %></p>
+ 
+  <%= form.submit 'Save' %>
+<% end %>
+<p><%= link_to 'back to Home', articles_path %></p>
